@@ -7,6 +7,8 @@ export const cookieOption = {
     hhtpOnly : true
 }
 
+
+
 export const signUp = asyncHandler(async(req,res)=>{
     // get data from user
 
@@ -47,4 +49,31 @@ export const signUp = asyncHandler(async(req,res)=>{
     
 
 
+})
+
+export const login = asyncHandler(async(req,res)=>{
+    // get data from user
+
+    const {email,password} = req.body;
+
+    //validation (we need to add more validation)
+    if(!email || !password){
+        throw new customError("Please add all fields",400)
+    }
+    const user = User.findOne({email}).select("+password");
+    if(!user){
+        throw new customError("Invaild credentials",400);
+    }
+    const isPasswordmateched = await user.comparePassword(password)
+    if(!isPasswordmateched){
+        const token = user.getJWTtoken();
+        user.password = undefined;
+        res.cookie("token",token,cookieOption)
+        return res.status.(200).json({
+            success:true,
+            token,
+            user
+    })
+    }
+    throw new customError("Password is incorrect",400)
 })
