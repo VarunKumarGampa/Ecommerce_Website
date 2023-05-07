@@ -32,7 +32,8 @@ const productSchema = new mongoose.Schema({
         default : 0,
     },
     collectoionID : {
-            ref Collection
+        type: mongoose.Schema.Types.ObjectId,
+        ref :"Collection",
     }
 
 },{timestamps:true})
