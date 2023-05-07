@@ -2,7 +2,7 @@
   "name": "ecommerce_website",
   "version": "1.0.0",
   "description": "Backend for ecomm application",
-  "type": "module" ,
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -11,6 +11,8 @@
   "author": "Varun Gampa",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.1.0",
+    "bcryptjs": "^2.4.3",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "mongoose": "^7.1.0"
