@@ -64,16 +64,30 @@ export const login = asyncHandler(async(req,res)=>{
     if(!user){
         throw new customError("Invaild credentials",400);
     }
-    const isPasswordmateched = await user.comparePassword(password)
+    const isPasswordmateched = await user.comparePassword(password);
+
     if(!isPasswordmateched){
         const token = user.getJWTtoken();
         user.password = undefined;
-        res.cookie("token",token,cookieOption)
-        return res.status.(200).json({
+        res.cookie("token",token,cookieOption);
+        return res.status(200).json({
             success:true,
             token,
             user
-    })
+        })
     }
     throw new customError("Password is incorrect",400)
 })
+
+export const logout = asyncHandler(async(req,res)=>{
+    res.cookie("token",null,{
+        expire: new Date(Date.now()),
+        httpOnly:true
+    })
+
+    res.status(200).json({
+        success:true,
+        message: "Logged Out"
+    })
+
+}) 
