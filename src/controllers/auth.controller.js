@@ -91,3 +91,17 @@ export const logout = asyncHandler(async(req,res)=>{
     })
 
 }) 
+
+//this will executed after Auth.middleware is executed
+export const getProfile = asyncHandler(async(req,res)=>{
+    const {user} = req
+
+    if(!user){
+        throw new customError("Not authorized to accesss this resource",401);
+    }
+
+    res.status(200).json({
+        success : true,
+        user
+    })
+})
